@@ -269,19 +269,14 @@ export const calculateSimilarity = async (results1, results2, image1, image2) =>
                 ? (deepScore > 0.8 ? 1 : 0)
                 : intersection.size / union.size;
 
-        // Final Weighted Score
-        let finalScore =
-            (deepScore * 0.60) +
-            (objectScore * 0.25) +
-            (histScore * 0.15);
-
-        if (deepScore < 0.3) {
-            finalScore *= 0.5;
-        }
-
+        // Final Score: based on pixel differences (0 diffs = 100, max 1024 diffs = 0)
+        const MAX_DIFF_CELLS = 1024; // 32x32 grid
+        const finalScore = parseFloat(
+            ((1 - diffCircles.length / MAX_DIFF_CELLS) * 100).toFixed(4)
+        );
 
         return {
-            score: parseFloat((finalScore * 100).toFixed(4)),
+            score: finalScore,
             deepScore: Math.round(deepScore * 100),
             objectScore: Math.round(objectScore * 100),
             colorScore: Math.round(histScore * 100),
