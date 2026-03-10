@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-slate-900 text-white overflow-x-hidden font-sans;
+  }
+}
+
+/* Glassmorphism Utilities */
+.glass {
+  @apply bg-white/10 backdrop-blur-md border border-white/20 shadow-xl;
+}
+
+.glass-card {
+  @apply bg-slate-800/50 backdrop-blur-lg border border-slate-700/50 shadow-2xl;
+}
